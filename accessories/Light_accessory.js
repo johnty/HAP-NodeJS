@@ -3,8 +3,19 @@ var Service = require('../').Service;
 var Characteristic = require('../').Characteristic;
 var uuid = require('../').uuid;
 
+var hue = require("node-hue-api"),
+ HueApi = hue.HueApi,
+ lightState = hue.lightState;
+	
+var host = "192.168.100.230",
+ username = "b225912329de4371bdc4d2e18678263",
+ api = new HueApi(host, username),
+ state = lightState.create();
+	
+	
+
 var LightController = {
-  name: "Simple Light", //name of accessory
+  name: "Dining Room Light", //name of accessory
   pincode: "031-45-154",
   username: "FA:3C:ED:5A:1A:1A", // MAC like address used by HomeKit to differentiate accessories. 
   manufacturer: "HAP-NodeJS", //manufacturer (optional)
@@ -16,11 +27,15 @@ var LightController = {
   hue: 0, //current hue
   saturation: 0, //current saturation
 
-  outputLogs: false, //output logs
+  outputLogs: true, //output logs
 
   setPower: function(status) { //set power of accessory
     if(this.outputLogs) console.log("Turning the '%s' %s", this.name, status ? "on" : "off");
     this.power = status;
+    if (status)
+       api.setGroupLightState(7, state.on());
+    else
+       api.setGroupLightState(7, state.off());
   },
 
   getPower: function() { //get power of accessory
@@ -31,6 +46,8 @@ var LightController = {
   setBrightness: function(brightness) { //set brightness
     if(this.outputLogs) console.log("Setting '%s' brightness to %s", this.name, brightness);
     this.brightness = brightness;
+    state.brightness(brightness);
+    api.setGroupLightState(7,state);
   },
 
   getBrightness: function() { //get brightness
