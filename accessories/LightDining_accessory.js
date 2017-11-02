@@ -16,11 +16,11 @@ var host = "192.168.100.230",
 
 var LightController = {
   name: "Dining Room Light", //name of accessory
-  pincode: "031-45-154",
+  pincode: "111-11-112",
   username: "FA:3C:ED:5A:1A:1A", // MAC like address used by HomeKit to differentiate accessories. 
   manufacturer: "HAP-NodeJS", //manufacturer (optional)
   model: "v1.0", //model (optional)
-  serialNumber: "A12S345KGB", //serial number (optional)
+  serialNumber: "JT0001", //serial number (optional)
 
   power: false, //curent power status
   brightness: 100, //current brightness
