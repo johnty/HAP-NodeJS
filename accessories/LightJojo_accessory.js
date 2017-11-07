@@ -15,17 +15,19 @@ var host = "192.168.100.230",
 	
 
 var LightController = {
-  name: "Kitchen Light", //name of accessory
+  name: "Jojo Light", //name of accessory
   pincode: "111-11-112",
-  username: "FA:3C:ED:5A:1A:1B", // MAC like address used by HomeKit to differentiate accessories. 
+  username: "FA:3C:ED:5A:1A:1E", // MAC like address used by HomeKit to differentiate accessories. 
   manufacturer: "HAP-NodeJS", //manufacturer (optional)
   model: "v1.0", //model (optional)
-  serialNumber: "JT0002", //serial number (optional)
+  serialNumber: "JT0004", //serial number (optional)
 
   power: false, //curent power status
   brightness: 100, //current brightness
   hue: 0, //current hue
   saturation: 0, //current saturation
+
+  hueGrpId: 6,
 
   outputLogs: true, //output logs
 
@@ -33,9 +35,9 @@ var LightController = {
     if(this.outputLogs) console.log("Turning the '%s' %s", this.name, status ? "on" : "off");
     this.power = status;
     if (status)
-       api.setGroupLightState(5, state.on());
+       api.setGroupLightState(this.hueGrpId, state.on());
     else
-       api.setGroupLightState(5, state.off());
+       api.setGroupLightState(this.hueGrpId, state.off());
   },
 
   getPower: function() { //get power of accessory
@@ -47,7 +49,7 @@ var LightController = {
     if(this.outputLogs) console.log("Setting '%s' brightness to %s", this.name, brightness);
     this.brightness = brightness;
     state.brightness(brightness);
-    api.setGroupLightState(5,state);
+    api.setGroupLightState(this.hueGrpId,state);
   },
 
   getBrightness: function() { //get brightness
@@ -65,11 +67,9 @@ var LightController = {
     return this.saturation;
   },
 
-  setHue: function(hue) { //set hue
+  setHue: function(hue) { //set brightness
     if(this.outputLogs) console.log("Setting '%s' hue to %s", this.name, hue);
     this.hue = hue;
-    state.hue((hue*193 + 2292) % 65535);
-    api.setGroupLightState(this.hueGrpId,state);
   },
 
   getHue: function() { //get hue

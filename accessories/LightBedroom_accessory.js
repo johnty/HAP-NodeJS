@@ -15,12 +15,12 @@ var host = "192.168.100.230",
 	
 
 var LightController = {
-  name: "Kitchen Light", //name of accessory
+  name: "Bedroom Light", //name of accessory
   pincode: "111-11-112",
-  username: "FA:3C:ED:5A:1A:1B", // MAC like address used by HomeKit to differentiate accessories. 
+  username: "FA:3C:ED:5A:1A:1C", // MAC like address used by HomeKit to differentiate accessories. 
   manufacturer: "HAP-NodeJS", //manufacturer (optional)
   model: "v1.0", //model (optional)
-  serialNumber: "JT0002", //serial number (optional)
+  serialNumber: "JT0003", //serial number (optional)
 
   power: false, //curent power status
   brightness: 100, //current brightness
@@ -33,9 +33,9 @@ var LightController = {
     if(this.outputLogs) console.log("Turning the '%s' %s", this.name, status ? "on" : "off");
     this.power = status;
     if (status)
-       api.setGroupLightState(5, state.on());
+       api.setGroupLightState(8, state.on());
     else
-       api.setGroupLightState(5, state.off());
+       api.setGroupLightState(8, state.off());
   },
 
   getPower: function() { //get power of accessory
@@ -47,7 +47,7 @@ var LightController = {
     if(this.outputLogs) console.log("Setting '%s' brightness to %s", this.name, brightness);
     this.brightness = brightness;
     state.brightness(brightness);
-    api.setGroupLightState(5,state);
+    api.setGroupLightState(8,state);
   },
 
   getBrightness: function() { //get brightness
@@ -65,11 +65,9 @@ var LightController = {
     return this.saturation;
   },
 
-  setHue: function(hue) { //set hue
+  setHue: function(hue) { //set brightness
     if(this.outputLogs) console.log("Setting '%s' hue to %s", this.name, hue);
     this.hue = hue;
-    state.hue((hue*193 + 2292) % 65535);
-    api.setGroupLightState(this.hueGrpId,state);
   },
 
   getHue: function() { //get hue

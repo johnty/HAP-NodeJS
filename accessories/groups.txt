@@ -1,0 +1,6 @@
+Kitchen: 5
+Bedroom: 8
+Entrance: 10
+Hallway: 4/11
+Jojo: 6 
+Dining: 7
